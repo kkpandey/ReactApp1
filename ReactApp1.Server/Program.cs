@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using ReactApp1.Server.Middleware;
 using ReactApp1.Server.Services;
 using ReactApp1.Server.Services.Interface;
 using System.ComponentModel;
