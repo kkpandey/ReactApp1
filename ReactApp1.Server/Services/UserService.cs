@@ -11,7 +11,7 @@ namespace ReactApp1.Server.Services
         public UserService()
         {
             // Populate dummy users
-            users.Add(new User { Username = "123", Password = "123" });
+            users.Add(new User { Username = "admin", Password = "admin" });
             users.Add(new User { Username = "user2", Password = "password2" });
         }
 
