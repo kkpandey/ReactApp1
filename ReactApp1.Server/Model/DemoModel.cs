@@ -18,6 +18,8 @@ namespace ReactApp1.Server.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
+        public string gender { get; set; }
+        public string phone { get; set; }
         // Add other properties as needed
     }
 

@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using ReactApp1.Server.Model;
 using ReactApp1.Server.Services.Interface;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace ReactApp1.Server.Controllers
@@ -32,13 +33,13 @@ namespace ReactApp1.Server.Controllers
         
         [HttpGet]
         [Authorize] // Require authentication for this endpoint
-        public async Task<IActionResult> GetUser()
+        public async Task<RandomUser> GetUser()
         {
             // Fetch random user from the API
             var user = await FetchRandomUser();
 
             // Return the user as JSON response
-            return Ok(user);
+            return user;
         }
         private async Task<RandomUser> FetchRandomUser()
         {
@@ -52,7 +53,9 @@ namespace ReactApp1.Server.Controllers
                 {
                     FirstName = result.results[0].name.first,
                     LastName = result.results[0].name.last,
-                    Email = result.results[0].email
+                    Email = result.results[0].email,
+                    gender = result.results[0].gender,
+                    phone = result.results[0].phone,
                     // Populate other properties as needed
                 };
                 return user;

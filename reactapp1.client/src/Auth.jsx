@@ -1,9 +1,10 @@
 import { useForm } from 'react-hook-form';
 import './App.css';
+import { useNavigate } from "react-router-dom";
 
 function App() {
-   // const [forecasts, setForecasts] = useState();
-    const {
+    const navigate = useNavigate();
+   const {
         register,
         handleSubmit,
         formState: { errors }
@@ -30,14 +31,18 @@ function App() {
         });
         const result = await response.json();
         console.log(result);
-        alert('Login successfully!!');
+        localStorage.setItem("accessToken", result.token);
+        navigate("/user");
+        
+
     }
 
 
     return (
         <div>
             <div>
-                <h2>Please Enter Control Details...</h2>
+                <h2>User Auth
+                </h2>
                 <form>
 
                     <table>
