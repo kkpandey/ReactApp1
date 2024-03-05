@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using ReactApp1.Server.Model;
 using ReactApp1.Server.Services.Interface;
 using System.Collections.Generic;
+using System.Text;
 
 namespace ReactApp1.Server.Controllers
 {
@@ -10,11 +13,14 @@ namespace ReactApp1.Server.Controllers
     [Route("[controller]")]
     public class DemoController : ControllerBase
     {
+        private readonly IHttpClientFactory _clientFactory;
+
         private IDemo _IDemo;
-        public DemoController(IDemo idemo)
+        public DemoController(IDemo idemo, IHttpClientFactory clientFactory)
         {
             _IDemo = idemo;
-           
+            _clientFactory = clientFactory;
+
         }
         [HttpGet("GetData")]
         public List<DemoModel> GetData()
@@ -23,20 +29,34 @@ namespace ReactApp1.Server.Controllers
             return response;
 
         }
-        [HttpPost("Save")]
-        public bool SaveControls(DemoModel model)
+        
+        [HttpGet]
+        [Authorize] // Require authentication for this endpoint
+        public async Task<IActionResult> GetUser()
         {
-            var response = _IDemo.SaveData(model);
-            return response;
+            // Fetch random user from the API
+            var user = await FetchRandomUser();
 
+            // Return the user as JSON response
+            return Ok(user);
         }
-        [HttpGet("DeleteItems")]
-        public bool DeleteItems(int id)
+        private async Task<RandomUser> FetchRandomUser()
         {
-            var responce = _IDemo.DeleteData(id);         
-           
-            return responce;
-
+            using (var httpClient = _clientFactory.CreateClient())
+            {
+                var response = await httpClient.GetAsync("https://randomuser.me/api/");
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                dynamic result = JsonConvert.DeserializeObject(responseBody);
+                var user = new RandomUser
+                {
+                    FirstName = result.results[0].name.first,
+                    LastName = result.results[0].name.last,
+                    Email = result.results[0].email
+                    // Populate other properties as needed
+                };
+                return user;
+            }
         }
     }
 }

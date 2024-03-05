@@ -12,4 +12,12 @@ namespace ReactApp1.Server.Model
         public string Address { get; set; }
         
     }
+
+    public class RandomUser
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        // Add other properties as needed
+    }
 }

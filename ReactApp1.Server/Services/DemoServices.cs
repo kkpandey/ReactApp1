@@ -26,18 +26,10 @@ namespace ReactApp1.Server.Services
             return lst;
 
         }
-        public bool SaveData(DemoModel model)
+        public bool LoginAuth(DemoModel model)
         {
-            bool result=false;
-            try
-            {
-                _context.DemoModels.Add(model);
-                _context.SaveChanges();
-                result = true;  
-            }
-            catch (Exception ex) { }
-            return result;
 
+            return false;
         }
        
     }

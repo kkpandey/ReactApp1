@@ -20,7 +20,8 @@ services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
            .AllowAnyHeader();
 }));
 services.AddScoped<IDemo, DemoServices>();
-
+// Add HttpClient service
+services.AddHttpClient();
 builder.Services.AddDbContext<ApplicationContext>(options =>
 {
     options.UseSqlServer(connection);
