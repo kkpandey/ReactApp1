@@ -38,7 +38,7 @@ function App() {
                     <th>LabelEnglish</th>                   
                     <th>Label Arabic</th>
                     <th>Mandatory</th>
-                    <th>Actions</th>
+                   
                 </tr>
             </thead>
             <tbody>
@@ -48,9 +48,7 @@ function App() {
                         <td>{forecast.labelEnglish}</td>                      
                         <td>{forecast.labelArabic}</td>
                         <td>{(forecast.mandatory ? "True" : "False")}</td>
-                        <td>
-                            <button onClick={() => handleDelete(forecast.id)}>Delete</button> 
-                        </td>
+                        
                     </tr>
                 )}
             </tbody>
@@ -71,25 +69,7 @@ function App() {
         populateWeatherData();
     }
        
-    const handleDelete =async (id) => {
-        if (window.confirm("Are you sure to delete this controls") == true) {
-            alert(id)
-            fetch(`https://localhost:7075/Demo/DeleteItems/id=${id}`, {
-                method: 'GET',
-                header: {
-                    'Content-Type': 'Application/json'
-                }
-            }).then(result => {
-                result.json.then((resp) => {
-                    console.warn(resp);
-                    populateWeatherData();
-                })
-            })
-
-        }
-
-    }
-
+    
     return (
         <div>
             <div>
